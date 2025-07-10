@@ -1,11 +1,19 @@
 {
   "deno.enable": true,
+  "deno.path": "/nix/store/ypz56627pmnva5njhv9yy4434n591gsy-deno-2.1.2/bin/deno",
   "deno.lint": true,
   "editor.formatOnSave": true,
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
   "[typescript]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
   },
-  "cssvar.files": ["./src/styles/variables.css"],
+  "cssvar.files": [
+    "./src/styles/variables.css"
+  ],
   "cssvar.disableSort": true,
-  "cssvar.extensions": ["css", "tsx", "ts"]
+  "cssvar.extensions": [
+    "css",
+    "tsx",
+    "ts"
+  ]
 }

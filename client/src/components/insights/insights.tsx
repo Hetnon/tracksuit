@@ -2,14 +2,36 @@ import { Trash2Icon } from "lucide-react";
 import { cx } from "../../lib/cx.ts";
 import styles from "./insights.module.css";
 import type { Insight } from "../../schemas/insight.ts";
+import { BRANDS } from "../../lib/consts.ts";
+import { DeleteInsight } from "../delete-insight/delete-insight.tsx";
+import { useState } from "react";
 
 type InsightsProps = {
   insights: Insight[];
   className?: string;
 };
 
-export const Insights = ({ insights, className }: InsightsProps) => {
-  const deleteInsight = () => undefined;
+export const Insights = ({ insights, className, setInsights }: InsightsProps) => {
+  const [deleteInsightOpen, setDeleteInsightOpen] = useState(false);
+  const [insightToDelete, setInsightToDelete] = useState<number | null>(null);
+  
+
+  const findBrandName = (brandId: number) => {
+    const brand = BRANDS.find((b) => b.id === brandId);
+    return brand ? brand.name : "Unknown Brand";
+  };
+
+  const writeDate = (date: string) :string => {
+    const d = new Date(date);
+    const dateFormat = d.toLocaleDateString("en-AU", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    return dateFormat;
+  };
+
+
 
   return (
     <div className={cx(className)}>
@@ -17,15 +39,15 @@ export const Insights = ({ insights, className }: InsightsProps) => {
       <div className={styles.list}>
         {insights?.length
           ? (
-            insights.map(({ id, text, date, brandId }) => (
+            insights.map(({ id, text, createdAt, brand }) => (
               <div className={styles.insight} key={id}>
                 <div className={styles["insight-meta"]}>
-                  <span>{brandId}</span>
+                  <span>{findBrandName(brand)}</span>
                   <div className={styles["insight-meta-details"]}>
-                    <span>{date.toString()}</span>
+                    <span>{writeDate(createdAt)}</span> {/* format date as needed */}
                     <Trash2Icon
                       className={styles["insight-delete"]}
-                      onClick={deleteInsight}
+                      onClick={() => {setDeleteInsightOpen(true); setInsightToDelete(id);}}
                     />
                   </div>
                 </div>
@@ -35,6 +57,13 @@ export const Insights = ({ insights, className }: InsightsProps) => {
           )
           : <p>We have no insight!</p>}
       </div>
+      <DeleteInsight
+        open={deleteInsightOpen}
+        onClose={() => setDeleteInsightOpen(false)}
+        insightId={insightToDelete}
+        setInsightToDelete={setInsightToDelete}
+        setInsights={setInsights} 
+      />
     </div>
   );
 };

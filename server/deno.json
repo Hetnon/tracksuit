@@ -2,6 +2,7 @@
   "name": "@suittracker/server",
   "$schema": "https://raw.githubusercontent.com/denoland/deno/refs/heads/v2.1/cli/schemas/config-file.v1.json",
   "exports": {},
+  "extends": "../deno.json",
   "tasks": {
     "dev": "deno run --allow-net --allow-read --allow-write --allow-ffi --allow-env --env-file=../.env --watch main.ts"
   },

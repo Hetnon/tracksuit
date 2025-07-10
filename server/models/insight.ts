@@ -7,4 +7,4 @@ export const Insight = z.object({
   text: z.string(),
 });
 
-export type Insight = z.infer<typeof Insight>;
+export type InsightType = z.infer<typeof Insight>;

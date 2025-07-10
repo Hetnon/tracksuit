@@ -27,6 +27,10 @@ export default defineConfig({
         target: `${env.servereBaseUrl}:${env.serverPort}`,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
+        onProxyReq(_, __, res) {
+          res.on('error', () => {/* swallow */});
+        },
+        onError() {/* swallow */}
       },
     },
   },
